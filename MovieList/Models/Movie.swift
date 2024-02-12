@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Movie: Identifiable, Decodable {
+struct Movie: Identifiable, Decodable, Encodable {
     var id: Int
     var title: String
     var director: String

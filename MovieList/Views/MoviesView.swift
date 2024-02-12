@@ -8,6 +8,7 @@ import SwiftUI
 
 struct MoviesView: View {
     @Binding var isPresented: Bool
+    @State private var showingAddMovieSheet = false
     @ObservedObject var viewModel = MovieViewModel()
     
     var body: some View {
@@ -17,12 +18,11 @@ struct MoviesView: View {
                     self.isPresented = false  // Dismiss the full screen cover
                 }) {
                     Image(systemName: "arrow.left") // SF Symbol for back arrow
-                        .foregroundColor(Color("Background"))
-                        
+                        .foregroundColor(Color("BorderColour"))
+                        .frame(width: 20, height: 20)
                         .padding()
-                        .background(Color("BorderColour")) // Custom color
-                        .clipShape(Circle())
                 }
+                .padding(.trailing, 10)
                 
                 Text("Discover")
                     .font(.custom("JetBrainsMono-Bold", size: 35))
@@ -31,6 +31,7 @@ struct MoviesView: View {
                     .resizable()
                     .scaledToFit()
                     .frame(width: 40, height: 40) // Adjusted height to match the text better
+                    
             }
             .padding(.top, 20) // Add padding only to the top to push it down from the safe area
            
@@ -57,7 +58,25 @@ struct MoviesView: View {
                         .stroke(Color("BorderColour"), lineWidth: 2)
                 )
             }
+            .padding()
             .listStyle(PlainListStyle())
+            .fullScreenCover(isPresented: $showingAddMovieSheet) {
+                AddMovieView(viewModel: viewModel)
+            }
+            
+            Button(action: {
+                showingAddMovieSheet = true // Dismiss the full screen cover
+            }) {
+                Image(systemName: "plus") // SF Symbol for back arrow
+                
+                    .foregroundColor(Color("Background"))
+                    .frame(width: 25, height: 25)
+                    .padding()
+                    .background(Color("BorderColour"))
+                    .clipShape(Circle())
+                    
+            }
+            .padding(.leading, 280)
         }
         .onAppear {
             viewModel.fetchMovies()
