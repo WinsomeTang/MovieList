@@ -15,12 +15,12 @@ struct IntroView: View {
             Spacer()
 
             Text("The")
-                .font(.largeTitle)
+                .font(.custom("JetBrainsMono-Regular", size: 35))
                 .fontWeight(.light)
                 .multilineTextAlignment(.center)
 
             Text("Epic Movie List")
-                .font(.largeTitle)
+                .font(.custom("JetBrainsMono-Bold", size: 35))
                 .fontWeight(.bold)
                 .multilineTextAlignment(.center)
                 .padding(.bottom, 50)
@@ -31,8 +31,8 @@ struct IntroView: View {
                 .scaledToFit()
                 .frame(width: 250, height: 250)
 
-            Text("It's movie time!")
-                .font(.headline)
+            Text("It's movie time! ! !")
+                .font(.custom("JetBrainsMono-Regular", size: 15))
                 .fontWeight(.light)
                 .padding()
 
@@ -41,7 +41,7 @@ struct IntroView: View {
                 isPresenting = true
             }) {
                 Text("START HERE.")
-                    .fontWeight(.semibold)
+                    .font(.custom("JetBrainsMono-Regular", size: 20))
                     .foregroundColor(Color("BorderColour"))
                     .padding(.vertical)
                     .padding(.horizontal, 50)
@@ -54,9 +54,8 @@ struct IntroView: View {
             }
             .padding()
             .fullScreenCover(isPresented: $isPresenting) {
-                MoviesView()  // The view to show when the sheet is presented
+                MoviesView(isPresented: self.$isPresenting)  // The view to show when the sheet is presented
             }
-
             Spacer()
         }
         .frame(maxWidth: .infinity)
